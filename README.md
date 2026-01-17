@@ -40,4 +40,38 @@ simulador-cdb/
 │── main.py
 │── cdb.py
 │── README.md
+
 │── requirements.txt
+```
+---
+
+## 🚀 Como Executar
+
+1. Instale as dependências:
+
+```bash
+pip install -r requirements.txt
+```
+
+2. Execute o simulador:
+
+```bash
+python main.py
+```
+
+3. Informe os dados solicitados pelo programa:
+- Valor inicial a investir
+- Prazo do investimento (em dias)
+- Percentual do CDI a ser aplicado
+
+3. O programa irá rodar a simulação de CDB definida no `main.py`, usando:
+- Período: 12 * 5 meses
+- CDI: 14.32%
+- CDB: 100%
+- Capital inicial: R$ 20.000
+- Aportes mensais: R$ 1.500
+
+4. O gráfico será gerado automaticamente mostrando:
+- Evolução do CDB (bruto e líquido)
+- Comparação com CDI
+- Caixa disponível
