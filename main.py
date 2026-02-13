@@ -1,9 +1,9 @@
-from cdb import calcularcdb, plotarcdb
+from src.titulo import calcular_titulo, plotarcdb
 
 def main():
 
     # ===============================
-    # SIMULAÇÃO CDB
+    # EXEMPLO: SIMULAÇÃO CDB
     # ===============================
     periodo = 12 * 5
     CDI = 14.32
@@ -11,7 +11,7 @@ def main():
     capital = 20000
     aportes = 1500
 
-    MCDB, MCDI, caixa, Mliq, t = calcularcdb(periodo, CDI, CDB, capital, aportes)
+    MCDB, MCDI, caixa, Mliq, t = calcular_titulo(periodo, CDI, CDB, capital, aportes)
 
     plotarcdb(MCDB, MCDI, caixa, Mliq, t)
 

@@ -1,49 +1,36 @@
 # Simulador de CDB em Python
 
 ## 📌 Descrição
-Este projeto tem como objetivo praticar **lógica de programação em Python**, **modularização de código** e **visualização de dados com matplotlib**, utilizando como contexto uma simulação de investimento em **CDB atrelado ao CDI**.
+Este projeto tem como objetivo praticar lógica de programação em Python, modularização de código e visualização de dados com matplotlib, utilizando como contexto uma simulação de investimentos atrelados ao CDI.
 
 O foco do projeto é educacional, não sendo uma ferramenta de previsão ou recomendação financeira.
 
----
+
+## 📊 Funcionalidades
+- Cálculo do montante bruto e líquido de LCI, LCA e CDB (antes e após IR)
+- Comparação com o CDI
+- Simulação do valor não investido
+- Geração de gráfico temporal 
 
 ## 🎯 Objetivos do Projeto
-- Aplicar conceitos de juros compostos
+- Aplicar conceitos de juros simples e compostos
 - Trabalhar com séries temporais utilizando `numpy`
 - Exercitar a modularização do código em funções
 - Visualizar dados financeiros com `matplotlib`
 - Simular o desconto automático de Imposto de Renda regressivo
 
----
-
-## 🧠 Conceitos de Programação Utilizados
-- Funções e modularização
-- Estruturas condicionais
-- Vetorização com NumPy
-- Tratamento básico de erros
-- Visualização de dados
-
----
-
-## 📊 Funcionalidades
-- Cálculo do montante bruto do CDB
-- Cálculo do montante líquido (após IR)
-- Comparação com o CDI
-- Simulação do valor não investido
-- Geração de gráfico temporal comparativo
-
----
-
 ## 📁 Estrutura do Projeto
-```text
+```bash
 simulador-cdb/
 │── main.py
-│── cdb.py
 │── README.md
-
+│── CONCEITOS.md
 │── requirements.txt
+│── src/
+│   └── titulo.py 
+└── notebooks/
+    └── analises.ipynb
 ```
----
 
 ## 🚀 Como Executar
 
@@ -59,19 +46,8 @@ pip install -r requirements.txt
 python main.py
 ```
 
-3. Informe os dados solicitados pelo programa:
-- Valor inicial a investir
-- Prazo do investimento (em dias)
-- Percentual do CDI a ser aplicado
+3. Ou abra o documento:
 
-3. O programa irá rodar a simulação de CDB definida no `main.py`, usando:
-- Período: 12 * 5 meses
-- CDI: 14.32%
-- CDB: 100%
-- Capital inicial: R$ 20.000
-- Aportes mensais: R$ 1.500
-
-4. O gráfico será gerado automaticamente mostrando:
-- Evolução do CDB (bruto e líquido)
-- Comparação com CDI
-- Caixa disponível
+```bash
+ notebooks/analises.ipynb
+```
