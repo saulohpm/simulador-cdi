@@ -1,4 +1,4 @@
-# Simulador de CDB em Python
+# Simulador de Investimentos atrelados ao CDI em Python
 
 ## 📌 Descrição
 Este projeto tem como objetivo praticar lógica de programação em Python, modularização de código e visualização de dados com matplotlib, utilizando como contexto uma simulação de investimentos atrelados ao CDI.
