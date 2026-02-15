@@ -3,7 +3,7 @@ from src.titulo import calcular_titulo, plotarcdb
 def main():
 
     # ===============================
-    # EXEMPLO: SIMULAÇÃO CDB
+    # EXEMPLO SIMPLES: SIMULAÇÃO TESTE
     # ===============================
     periodo = 12 * 5
     CDI = 14.32

@@ -21,7 +21,7 @@ O foco do projeto é educacional, não sendo uma ferramenta de previsão ou reco
 
 ## 📁 Estrutura do Projeto
 ```bash
-simulador-cdb/
+simulador-cdi/
 │── main.py
 │── README.md
 │── CONCEITOS.md
