@@ -1,6 +1,7 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
-def taxa_de_juros_variavel(taxa: float, t: np.ndarray, taxa_max: float = 0.15, taxa_min: float = 0.02, mercado: str = "alta"):
+def taxa_de_juros_variavel(taxa_atual: float, t: np.ndarray, taxa_max: float = 0.15, taxa_min: float = 0.02, mercado: str = "alta"):
     """
     Gera uma taxa anual variável ao longo do tempo.
 
@@ -14,18 +15,18 @@ def taxa_de_juros_variavel(taxa: float, t: np.ndarray, taxa_max: float = 0.15, t
         np.ndarray: taxa anual variável.
     """
 
-    if mercado.lower() == "alta":
-        fase = 0
-
-    elif mercado.lower() == "baixa":
-        fase = np.pi
-
-    else:
-        raise ValueError("ERRO: mercado deve ser 'alta' ou 'baixa'")
-
     alpha = (taxa_max - taxa_min) / 2
     beta = (taxa_min + taxa_max) / 2
 
-    taxa_variavel = alpha * np.sin(t / 0.75 + fase) + beta
+    x = (taxa_atual - beta) / alpha
+    phi = np.arcsin(x)
+
+    if mercado.lower() == "baixa":
+        phi = np.pi - phi
+
+    elif mercado.lower() != "alta":
+        raise ValueError("ERRO: mercado deve ser 'alta' ou 'baixa'")
+
+    taxa_variavel = alpha * np.sin(t / 8 + phi) + beta
 
     return taxa_variavel

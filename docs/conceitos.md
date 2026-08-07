@@ -112,25 +112,70 @@ Para simular um cenário de mercado onde a taxa de juros não permanece constant
 A taxa variável é definida por:
 
 $$
-i(t)=\alpha \cdot \sin\left(\frac{t}{0.75}+\phi\right)+\beta
+i(t)=\alpha \cdot \sin\left(\frac{t}{8}+\phi\right)+\beta
 $$
 
-onde $\alpha=\frac{i_{max}-i_{min}}{2}$ representa a amplitude da oscilação, e $\beta=\frac{i_{min}+i_{max}}{2}$ representa a taxa média do ciclo.
+onde:
 
-Os parâmetros são:
+$$
+\alpha=\frac{i_{max}-i_{min}}{2}
+$$
 
-- $i(t)$: taxa anual variável no período $t$;
-- $i_{max}$: taxa máxima esperada;
-- $i_{min}$: taxa mínima esperada;
-- $t$: tempo em meses;
-- $\phi$: fase do ciclo de mercado.
+representa a amplitude da oscilação, e
+
+$$
+\beta=\frac{i_{min}+i_{max}}{2}
+$$
+
+representa a taxa média do ciclo.
 
 ---
 
-A fase do ciclo permite representar diferentes cenários:
+Os parâmetros são:
 
-- **Mercado em alta:** inicia o ciclo em uma fase de juros elevados;
-- **Mercado em baixa:** desloca o ciclo para representar uma tendência de queda.
+* $i(t)$: taxa anual variável no período $t$;
+* $i_{max}$: taxa máxima esperada;
+* $i_{min}$: taxa mínima esperada;
+* $t$: tempo em meses;
+* $\alpha$: amplitude da variação da taxa;
+* $\beta$: valor médio entre as taxas máxima e mínima;
+* $\phi$: fase do ciclo.
+
+---
+
+A fase $\phi$ é calculada de forma que a função passe pela **taxa atual** no instante inicial:
+
+$$
+i(0)=i_{atual}
+$$
+
+Substituindo $t=0$ na função:
+
+$$
+i_{atual}=\alpha\sin(\phi)+\beta
+$$
+
+Assim, uma das soluções possíveis é:
+
+$$
+\phi=\arcsin\left(\frac{i_{atual}-\beta}{\alpha}\right)
+$$
+
+---
+
+Entretanto, existem duas fases possíveis para o mesmo valor de seno. A escolha entre elas permite determinar a direção inicial da curva.
+
+Para um **mercado em alta**, é utilizada a fase correspondente a uma derivada inicial positiva, fazendo com que a taxa comece a subir.
+
+Para um **mercado em baixa**, é utilizada a segunda solução:
+
+$$
+\phi=\pi-\arcsin\left(\frac{i_{atual}-\beta}{\alpha}\right)
+$$
+
+fazendo com que a derivada inicial seja negativa e, portanto, a taxa comece a cair.
+
+---
 
 A implementação:
 
@@ -138,6 +183,14 @@ A implementação:
 def taxa_de_juros_variavel(taxa, t, taxa_max=0.15, taxa_min=0.02, mercado="alta"):
     ...
 ```
+
+A função, portanto, garante que:
+
+$$
+i(0)=i_{atual}
+$$
+
+enquanto o parâmetro `mercado` determina se a função inicia em uma trajetória de alta ou de baixa.
 
 ---
 
@@ -151,3 +204,14 @@ O gráfico compara:
 - Caixa (`caixa`) — linha tracejada vermelha  
 
 Essa estrutura permite analisar rapidamente qual investimento rende mais líquido e como se comporta frente ao CDI e ao capital não investido.
+
+---
+
+## Referências
+
+ASSAF NETO, Alexandre. *Matemática Financeira e suas Aplicações*. 
+15. ed. São Paulo: Atlas, 2022.
+
+PEREIRA, Luana Cristina Santos. *Funções Seno e Cosseno: Fenômenos Periódicos*. 2013. 50 f. Trabalho de Conclusão de Curso (Licenciatura em Matemática) — Centro de Educação e Saúde, Universidade Federal de Campina Grande, Cuité, 2013. Disponível em: [Biblioteca Digital da UFCG — Funções Seno e Cosseno: Fenômenos Periódicos](https://dspace.sti.ufcg.edu.br/handle/riufcg/20654). Acesso em: 7 ago. 2026.
+
+BRASIL. *Lei nº 11.033, de 21 de dezembro de 2004*. Altera a tributação do mercado financeiro e de capitais e dá outras providências. Brasília, DF: Presidência da República. Disponível em: [Lei nº 11.033/2004 — Planalto](https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2004/lei/l11033compilado.htm). Acesso em: 7 ago. 2026.

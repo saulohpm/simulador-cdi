@@ -14,7 +14,7 @@ def main():
     t = np.arange(periodo + 1) # Domínio Temporal
 
     # CDB 100% CDI
-    CDI = taxa_de_juros_variavel(CDI_atual, t)
+    CDI = taxa_de_juros_variavel(CDI_atual / 100, t)
     MCDB, MCDI, caixa, Mliq, t = posfixado(periodo, CDI, 100, capital, aportes)
     plotar(MCDB, MCDI, caixa, Mliq, t)
 
