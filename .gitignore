@@ -1,0 +1,106 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / Packaging
+.Python
+build/
+dist/
+downloads/
+develop-eggs/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+*.egg
+MANIFEST
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache/
+.pytest_cache/
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Type checkers
+.mypy_cache/
+.pyre/
+.pytype/
+
+# Linters
+.ruff_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Environments
+.env
+.env.*
+.venv/
+venv/
+env/
+ENV/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Poetry
+poetry.lock
+
+# Pipenv
+Pipfile.lock
+
+# Hatch
+.hatch/
+
+# PDM
+.pdm-python/
+.pdm-build/
+
+# Documentation
+docs/_build/
+
+# mkdocs
+site/
+
+# Sphinx
+_doctrees/
+
+# Local configuration
+*.local
+
+# Temporary files
+*.tmp
+*.temp

@@ -1,4 +1,5 @@
-from src.titulo import calcular_titulo, plotarcdb
+from src.calculos import calcular_titulo
+from src.graficos import plotarcdb
 
 def main():
 
