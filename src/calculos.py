@@ -1,54 +1,103 @@
 import numpy as np
 
-def calcular_titulo(periodo: int, taxa_indexador: float, percentual_indexador: float, capital: float = 0, aportes: float = 0, tipo: str = 'CDB'):
+def calcular_titulo(periodo: int, taxa_indexador: float, percentual_indexador: float, capital: float = 0, aportes: float = 0, imposto: str = 'sim'):
     """
-    Calcula o rendimento de um título (CDB, LCI ou LCA) atrelado a uma taxa indexada.
+    Calcula o rendimento de um título (CDB, LCI ou LCA) atrelado a um indexador.
 
     Args:
-        periodo (int): número de meses.
-        taxa_indexador (float): taxa anual do indexador em % (ex: CDI, IPCA ou prefixada).
-        percentual_indexador (float): percentual do rendimento sobre o indexador em % (ex: 100, 110).
-        capital (float, optional): capital inicial. Padrão é 0.
-        aportes (float, optional): aporte mensal. Padrão é 0.
-        tipo (str, optional): tipo do título ('CDB', 'LCI' ou 'LCA'). Padrão é 'CDB'.
+        periodo (int):
+            Número de meses do investimento.
+
+        taxa_indexador (float):
+            Taxa anual do indexador em percentual (%).
+            Exemplo: CDI de 14,5% deve ser informado como 14.5.
+
+        percentual_indexador (float):
+            Percentual aplicado sobre o indexador em percentual (%).
+            Exemplos:
+                100 para 100% do CDI
+                110 para 110% do CDI
+                90 para 90% do CDI
+
+        capital (float, optional):
+            Capital inicial investido.
+
+        aportes (float, optional):
+            Valor aportado mensalmente.
+
+        tipo (str, optional):
+            Tipo do título:
+                'CDB' -> sujeito a IR regressivo
+                'LCI' -> isento de IR
+                'LCA' -> isento de IR
 
     Returns:
-        tuple: 
-            - Mtitulo (np.ndarray): montante bruto do investimento ao longo do tempo.
-            - Mtaxa (np.ndarray): montante do indexador puro (ex: CDI) ao longo do tempo.
-            - caixa (np.ndarray): capital acumulado sem investir (capital + aportes).
-            - Mliq (np.ndarray): montante líquido do investimento (após IR se aplicável).
-            - t (np.ndarray): vetor de tempo em meses.
-    
+        tuple:
+            Mtitulo:
+                Valor bruto acumulado do título.
+
+            Mtaxa:
+                Evolução do indexador puro (100% do indexador).
+
+            caixa:
+                Valor acumulado sem rendimento.
+
+            Mliq:
+                Valor líquido após impostos.
+
+            t:
+                Vetor de tempo em meses.
+
     Notes:
-        - Para LCI e LCA, Mliq geralmente é igual a Mtitulo, pois são isentos de IR.
-        - IR é aplicado apenas para CDB, conforme tabela regressiva.
+        - Taxas de entrada usam percentual (%).
+        - Internamente são convertidas para decimal.
+        - LCI e LCA não sofrem IR.
+        - CDB utiliza tabela regressiva de IR.
     """
 
-    p, A, C = periodo, aportes, capital
+    t = np.arange(periodo + 1)
 
-    taxa = taxa_indexador / 100
+    taxa_convertida = taxa_indexador / 100
+
+    if np.isscalar(taxa_convertida):
+        taxa = np.full(periodo + 1, taxa_convertida)
+    else:
+        taxa = taxa_convertida
+
     percentual = percentual_indexador / 100
 
-    taxa_meses = (1 + taxa) ** (1 / 12) - 1 # Converte a taxa anual da taxa indexada para mensal
-    rendimento_meses = percentual * taxa_meses # Rendimento mensal em cima da taxa indexada
+    taxa_meses = (1 + taxa) ** (1 / 12) - 1
 
-    t = np.arange(0, p + 1) # Domínio
+    rendimento_meses = percentual * taxa_meses
 
-    Mtitulo = C * (1 + rendimento_meses) ** t + A * ((1 + rendimento_meses) ** t - 1) / rendimento_meses # Montante Bruto
-    Mtaxa = C * (1 + taxa_meses) ** t + A * ((1 + taxa_meses) ** t - 1) / taxa_meses
-    caixa = C + A * t
+    Mtitulo = np.zeros(periodo + 1)
+    Mtaxa = np.zeros(periodo + 1)
+    caixa = np.zeros(periodo + 1)
+
+    Mtitulo[0] = capital
+    Mtaxa[0] = capital
+    caixa[0] = capital
+
+    for i in range(1, periodo + 1):
+
+        Mtitulo[i] = (Mtitulo[i - 1] + aportes) * (1 + rendimento_meses[i])
+
+        Mtaxa[i] = (Mtaxa[i - 1] + aportes) * (1 + taxa_meses[i])
+
+        caixa[i] = caixa[i - 1] + aportes
 
     dias = t * 30
 
-    # Calcula IR apenas para CDB
-    if tipo.upper() == 'CDB':
-        alpha = np.where(dias <= 180, 0.225, np.where(dias <= 360, 0.20, np.where(dias <= 720, 0.175, 0.15)))
-        R = Mtitulo - (C + A * t) # Rendimento bruto
-        IR = alpha * R
+    if imposto.lower() == "sim":
+        alpha = np.where(dias <= 180, 0.225,np.where(dias <= 360, 0.20,np.where(dias <= 720, 0.175, 0.15)))
+
+        rendimento = Mtitulo - caixa
+
+        IR = alpha * rendimento
+
         Mliq = Mtitulo - IR
 
-    else:  # LCI/LCA isento
+    else:
         Mliq = Mtitulo
 
     return Mtitulo, Mtaxa, caixa, Mliq, t
