@@ -26,6 +26,6 @@ def taxa_de_juros_variavel(taxa: float, t: np.ndarray, taxa_max: float = 0.15, t
     alpha = (taxa_max - taxa_min) / 2
     beta = (taxa_min + taxa_max) / 2
 
-    taxa_variavel = alpha * np.sin(t / 2 + fase) + beta
+    taxa_variavel = alpha * np.sin(t / 0.75 + fase) + beta
 
     return taxa_variavel

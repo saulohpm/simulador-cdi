@@ -1,7 +1,7 @@
 # Simulador de Investimentos atrelados ao CDI
 
 ![Python](https://img.shields.io/badge/Python-3.13-blue)
-![Versão](https://img.shields.io/badge/Versão-2.2.2-orange)
+![Versão](https://img.shields.io/badge/Versão-2.2.4-orange)
 ![status](https://img.shields.io/badge/status-educacional-lightgrey)
 
 Simulador de investimentos (CDB, LCI, LCA) atrelados ao CDI, com cálculo de IR regressivo e comparação de rendimento, projeto de estudo em Python, numpy e matplotlib.

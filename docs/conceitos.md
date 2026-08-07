@@ -112,7 +112,7 @@ Para simular um cenário de mercado onde a taxa de juros não permanece constant
 A taxa variável é definida por:
 
 $$
-i(t)=\alpha \cdot \sin\left(\frac{t}{2}+\phi\right)+\beta
+i(t)=\alpha \cdot \sin\left(\frac{t}{0.75}+\phi\right)+\beta
 $$
 
 onde $\alpha=\frac{i_{max}-i_{min}}{2}$ representa a amplitude da oscilação, e $\beta=\frac{i_{min}+i_{max}}{2}$ representa a taxa média do ciclo.

@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 
-def plotarcdb(Mtitulo, Mtaxa, caixa, Mliq, t, tipo: str = 'CDB', tamanho=(16,8)):
+def plotar(Mtitulo, Mtaxa, caixa, Mliq, t, imposto: str = 'sim', nome: str = "Investimento", tamanho = (16,8)):
 
     """
     Plota gráfico comparativo de um investimento versus indexador e caixa.
@@ -14,7 +14,8 @@ def plotarcdb(Mtitulo, Mtaxa, caixa, Mliq, t, tipo: str = 'CDB', tamanho=(16,8))
         caixa (np.ndarray): Capital acumulado sem investir.
         Mliq (np.ndarray): Montante líquido do investimento (após IR, se aplicável).
         t (np.ndarray): Vetor de tempo em meses.
-        tipo (str, optional): Tipo do investimento ('CDB', 'LCI', 'LCA'). Padrão é 'CDB'.
+        imposto (str, optional): Paga imposto? Padrão é 'sim'.
+        nome (str, optional): Nome do Investimento que será mostrado no plot do gráfico
         tamanho (tuple, optional): Tamanho da figura em polegadas (largura, altura). Padrão é (16,8).
 
     Returns:
@@ -29,13 +30,13 @@ def plotarcdb(Mtitulo, Mtaxa, caixa, Mliq, t, tipo: str = 'CDB', tamanho=(16,8))
     plt.figure(figsize=tamanho)
 
     # Plot do Gráfico
-    if tipo.upper() == 'CDB':
-        plt.plot(t, Mtitulo, color='orange', label=f'{tipo} Bruto', linestyle='--')
-    plt.plot(t, Mliq, color='orange', label=f'{tipo} Líquido', linestyle='-')
+    if imposto.lower() == 'sim':
+        plt.plot(t, Mtitulo, color='orange', label=f'{nome} Bruto', linestyle='--')
+    plt.plot(t, Mliq, color='orange', label=f'{nome} Líquido', linestyle='-')
     plt.plot(t, Mtaxa,color='gray', label='CDI', linestyle='--')
     plt.plot(t, caixa,color='red', label='Não Investido', linestyle='--')
 
-    plt.title(f"Simulação de {tipo}")
+    plt.title(f"Simulação de {nome}")
     plt.xlabel("tempo (meses)")
     plt.ylabel("Valor (R$)")
     plt.grid(True, alpha=0.75)
