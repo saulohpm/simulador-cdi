@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 
 
 def plotar(Mtitulo, Mtaxa, caixa, Mliq, t, imposto: str = 'sim', nome: str = "Investimento", tamanho = (16,8)):
-
     """
     Plota gráfico comparativo de um investimento versus indexador e caixa.
 
