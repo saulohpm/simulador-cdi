@@ -180,7 +180,7 @@ fazendo com que a derivada inicial seja negativa e, portanto, a taxa comece a ca
 A implementação:
 
 ```python
-def taxa_de_juros_variavel(taxa, t, taxa_max=0.15, taxa_min=0.02, mercado="alta"):
+def taxa_de_juros_variavel(taxa_atual, t, taxa_max = 15, taxa_min = 2, mercado = "alta"):
     ...
 ```
 

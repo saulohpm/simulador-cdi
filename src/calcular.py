@@ -3,86 +3,96 @@ import numpy as np
 def posfixado(periodo: int, taxa_indexador, percentual_indexador: float, capital: float = 0, aportes: float = 0,
               imposto: str = 'sim'):
     """
-    Calcula o rendimento de um título de renda fixa pós-fixado
-    atrelado a um indexador, como CDI, Selic ou outro indicador.
+    Calcula a evolução de um investimento de renda fixa pós-fixado
+    atrelado a um indexador.
 
-    O rendimento do título acompanha a variação do indexador,
-    multiplicado pelo percentual contratado do investimento.
+    O rendimento do título é calculado a partir da taxa anual do
+    indexador, convertida para uma taxa mensal equivalente, e do
+    percentual contratado sobre esse indexador.
 
-    Exemplos:
-        - CDB 100% CDI
-        - CDB 110% CDI
-        - LCI 90% CDI
-        - LCA 95% CDI
+    Exemplos de investimentos:
+        - CDB 100% do CDI
+        - CDB 110% do CDI
+        - LCI 90% do CDI
+        - LCA 95% do CDI
 
     Args:
         periodo (int):
-            Número de meses do investimento.
+            Número de meses da simulação.
 
-        taxa_indexador (float):
-            Taxa anual do indexador em percentual (%).
+        taxa_indexador (float or np.ndarray):
+            Taxa anual do indexador em porcentagem (%).
 
-            Exemplos:
-                CDI de 14,5% deve ser informado como 14.5.
+            Pode ser:
+                - um valor único, representando uma taxa constante;
+                - um vetor de taxas, permitindo simular um indexador
+                  variável ao longo do tempo.
+
+            Exemplo:
+                14.5 representa uma taxa anual de 14,5%.
 
         percentual_indexador (float):
-            Percentual aplicado sobre o indexador em percentual (%).
+            Percentual do indexador contratado pelo investimento,
+            expresso em porcentagem (%).
 
             Exemplos:
-                100 -> 100% do CDI
-                110 -> 110% do CDI
-                90  -> 90% do CDI
+                100 -> 100% do indexador
+                110 -> 110% do indexador
+                90  -> 90% do indexador
 
         capital (float, optional):
-            Capital inicial investido.
-
-            Valor aplicado no início da simulação.
+            Capital inicial investido no início da simulação.
+            Padrão: 0.
 
         aportes (float, optional):
-            Valor aportado mensalmente durante o período
-            do investimento.
+            Valor aportado mensalmente durante o período da simulação.
+            Padrão: 0.
 
         imposto (str, optional):
-            Define se haverá desconto de Imposto de Renda.
+            Define se o Imposto de Renda será aplicado sobre o
+            rendimento.
 
             Valores aceitos:
-                'sim' -> aplica IR regressivo sobre o rendimento
-                'não' -> não aplica imposto
+                'sim' -> aplica IR regressivo.
+                'não' -> não aplica IR.
 
-            Observações:
-                - CDB normalmente utiliza IR regressivo.
-                - LCI e LCA são isentos de IR.
+            Padrão: 'sim'.
 
     Returns:
         tuple:
-            Mtitulo:
-                Vetor contendo a evolução do valor bruto acumulado
-                do título ao longo dos meses.
+            Mtitulo (np.ndarray):
+                Montante bruto acumulado do investimento ao longo
+                dos meses, considerando o percentual contratado
+                do indexador.
 
-            Mtaxa:
-                Vetor contendo a evolução de uma aplicação equivalente
-                a 100% do indexador, sem considerar o percentual contratado.
+            Mtaxa (np.ndarray):
+                Montante bruto acumulado de uma aplicação que acompanha
+                100% do indexador, independentemente do percentual
+                contratado pelo título.
 
-            caixa:
-                Vetor contendo a evolução do valor acumulado apenas
-                com os aportes realizados, sem rendimento.
+            caixa (np.ndarray):
+                Valor acumulado das quantias efetivamente investidas,
+                sem considerar rendimentos.
 
-            Mliq:
-                Vetor contendo o valor líquido acumulado após o desconto
-                do Imposto de Renda, quando aplicável.
+            Mliq (np.ndarray):
+                Montante líquido acumulado após o desconto do Imposto
+                de Renda, quando aplicável.
 
-            t:
-                Vetor contendo o período em meses da simulação.
+            t (np.ndarray):
+                Vetor contendo os períodos da simulação, em meses,
+                iniciando em zero.
 
     Notes:
-        - As taxas de entrada são informadas em percentual (%).
-        - Internamente, as taxas são convertidas para formato decimal.
+        - As taxas de entrada são informadas em porcentagem (%).
+        - As taxas são convertidas internamente para formato decimal.
         - A taxa anual do indexador é convertida para uma taxa mensal
           equivalente utilizando juros compostos.
-        - O rendimento mensal é calculado considerando o percentual
-          contratado sobre o indexador.
-        - A função permite simular diferentes produtos pós-fixados,
-          alterando apenas o indexador e o percentual contratado.
+        - O rendimento mensal do título corresponde à taxa mensal do
+          indexador multiplicada pelo percentual contratado.
+        - O Imposto de Renda, quando habilitado, é calculado sobre o
+          rendimento e não sobre o capital investido.
+        - A função permite simular indexadores constantes ou variáveis
+          ao longo do tempo.
     """
 
     t = np.arange(periodo + 1)
@@ -122,67 +132,78 @@ def posfixado(periodo: int, taxa_indexador, percentual_indexador: float, capital
 
 def prefixado(periodo: int, taxa_anual: float, capital: float = 0, aportes: float = 0, imposto: str = 'sim'):
     """
-    Calcula o rendimento de um título de renda fixa prefixado.
+    Calcula a evolução de um investimento de renda fixa prefixado.
 
-    O título prefixado possui uma taxa fixa definida no momento da aplicação,
-    portanto seu rendimento não depende de nenhum indexador externo como CDI
-    ou IPCA.
+    Um investimento prefixado possui uma taxa anual fixa definida
+    no momento da aplicação. Dessa forma, seu rendimento não depende
+    da variação de um indexador externo, como CDI ou IPCA.
 
-    Exemplos:
+    Exemplos de investimentos:
         - CDB Prefixado 12% a.a.
         - LCI Prefixada 10% a.a.
         - LCA Prefixada 11% a.a.
 
     Args:
         periodo (int):
-            Número de meses do investimento.
+            Número de meses da simulação.
 
         taxa_anual (float):
-            Taxa fixa anual contratada em percentual (%).
+            Taxa fixa anual contratada, expressa em porcentagem (%).
 
             Exemplos:
-                12 significa 12% ao ano.
-                10.5 significa 10,5% ao ano.
+                12 -> 12% ao ano.
+                10.5 -> 10,5% ao ano.
 
         capital (float, optional):
-            Capital inicial investido. Padrão é 0.
+            Capital inicial investido no início da simulação.
+            Padrão: 0.
 
         aportes (float, optional):
-            Valor aportado mensalmente. Padrão é 0.
+            Valor aportado mensalmente durante o período da simulação.
+            Padrão: 0.
 
         imposto (str, optional):
-            Tipo do título:
-                'sim' -> sujeito a IR regressivo.
-                'não' -> isento de IR.
+            Define se o Imposto de Renda será aplicado sobre o
+            rendimento.
 
-            Padrão é 'sim'.
+            Valores aceitos:
+                'sim' -> aplica IR regressivo.
+                'não' -> não aplica IR.
+
+            Padrão: 'sim'.
 
     Returns:
         tuple:
-            - Mtitulo (np.ndarray):
-                Montante bruto acumulado do investimento ao longo do tempo.
+            Mtitulo (np.ndarray):
+                Montante bruto acumulado do investimento ao longo
+                dos meses.
 
-            - Mtaxa (np.ndarray):
-                Evolução da aplicação considerando a taxa contratada.
+            Mtaxa (np.ndarray):
+                Cópia do montante bruto calculado com a taxa prefixada.
+                É mantido como uma saída separada para manter a mesma
+                estrutura de retorno utilizada pela função `posfixado`.
 
-            - caixa (np.ndarray):
-                Capital acumulado sem rendimento (capital + aportes).
+            caixa (np.ndarray):
+                Valor acumulado das quantias efetivamente investidas,
+                sem considerar rendimentos.
 
-            - Mliq (np.ndarray):
-                Montante líquido após desconto de IR quando aplicável.
+            Mliq (np.ndarray):
+                Montante líquido acumulado após o desconto do Imposto
+                de Renda, quando aplicável.
 
-            - t (np.ndarray):
-                Vetor de tempo em meses.
+            t (np.ndarray):
+                Vetor contendo os períodos da simulação, em meses,
+                iniciando em zero.
 
     Notes:
-        - A taxa de entrada utiliza percentual (%).
-        - Internamente a taxa é convertida para decimal.
+        - A taxa anual é informada em porcentagem (%).
+        - Internamente, a taxa é convertida para formato decimal.
         - A taxa anual é convertida para uma taxa mensal equivalente
           utilizando juros compostos.
-        - Diferente do pós-fixado, a taxa permanece constante durante
-          todo o período da simulação.
-        - CDB sofre incidência de IR regressivo.
-        - LCI e LCA são isentos de IR.
+        - A taxa mensal permanece constante durante toda a simulação.
+        - Os aportes são considerados no início de cada período mensal.
+        - O Imposto de Renda, quando habilitado, é aplicado somente
+          sobre o rendimento e não sobre o capital investido.
     """
 
     taxa = taxa_anual / 100
@@ -209,13 +230,12 @@ def prefixado(periodo: int, taxa_anual: float, capital: float = 0, aportes: floa
 
 def _imposto(dias, Mtitulo, caixa):
     """
-    Calcula o valor líquido de um investimento após a aplicação do
-    Imposto de Renda regressivo.
+    Calcula o montante líquido de um investimento após a aplicação
+    do Imposto de Renda regressivo sobre o rendimento.
 
-    A função recebe o montante bruto acumulado de um investimento e
-    aplica a alíquota correspondente ao período de permanência do
-    capital, seguindo a tabela regressiva de IR utilizada em aplicações
-    de renda fixa tributáveis, como CDBs.
+    A função determina a alíquota de Imposto de Renda de acordo com
+    o tempo de permanência do investimento e aplica essa alíquota
+    somente sobre o rendimento obtido.
 
     Args:
         dias (np.ndarray):
@@ -224,24 +244,24 @@ def _imposto(dias, Mtitulo, caixa):
             aplicável em cada período.
 
         Mtitulo (np.ndarray):
-            Vetor contendo o montante bruto acumulado do investimento
-            ao longo do tempo.
+            Vetor contendo os valores brutos acumulados do investimento
+            ao longo dos períodos.
 
         caixa (np.ndarray):
-            Vetor contendo o valor acumulado sem rendimento,
-            representando o capital inicial mais os aportes realizados.
+            Vetor contendo os valores efetivamente investidos,
+            correspondentes ao capital inicial somado aos aportes,
+            sem considerar os rendimentos.
 
     Returns:
         np.ndarray:
-            Mliq:
-                Vetor contendo o montante líquido do investimento após
-                o desconto do Imposto de Renda sobre o rendimento obtido.
+            Vetor contendo os valores líquidos acumulados após o
+            desconto do Imposto de Renda.
 
     Notes:
-        - O Imposto de Renda é aplicado somente sobre o rendimento,
-          não sobre o valor investido.
-
-        - A alíquota segue a tabela regressiva:
+        - O Imposto de Renda é calculado somente sobre o rendimento,
+          determinado pela diferença entre `Mtitulo` e `caixa`.
+        - O capital investido não sofre incidência de Imposto de Renda.
+        - A alíquota utilizada segue a tabela regressiva:
 
             Até 180 dias:
                 22,5%
@@ -255,9 +275,13 @@ def _imposto(dias, Mtitulo, caixa):
             Acima de 720 dias:
                 15%
 
-        - A função não valida se o investimento possui isenção de IR.
-          A decisão de aplicar ou não o imposto deve ser feita pela
-          função principal do investimento (exemplo: CDB, LCI ou LCA).
+        - A função não verifica se o investimento é isento de Imposto
+          de Renda. Essa decisão deve ser feita pela função que a chama,
+          como `posfixado` ou `prefixado`.
+
+        - Esta é uma função interna, indicada pelo prefixo `_`, e seu
+          uso é destinado principalmente às funções de cálculo dos
+          investimentos.
     """
 
     alpha = np.where(dias <= 180, 0.225, np.where(dias <= 360, 0.20, np.where(dias <= 720, 0.175, 0.15)))
