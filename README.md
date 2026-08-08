@@ -33,7 +33,7 @@ O foco do projeto é educacional, não sendo uma ferramenta de previsão ou reco
 - Visualizar dados financeiros com `matplotlib`
 - Simular o desconto automático de Imposto de Renda regressivo
 
-Os detalhes matemáticos de cada cálculo (conversão de taxa, IR regressivo, montante com aportes, modelagem da taxa variável) estão documentados em [`CONCEITOS.md`](CONCEITOS.md). <!-- TODO: confirmar caminho real -->
+Os detalhes matemáticos de cada cálculo (conversão de taxa, IR regressivo, montante com aportes, modelagem da taxa variável) estão documentados em [`docs/conceitos.md`](docs/conceitos.md) ou use [`docs/conceitos.pdf`](docs/conceitos.pdf).
 
 ## 📁 Estrutura do Projeto
 ```bash
