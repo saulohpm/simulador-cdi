@@ -1,8 +1,8 @@
 # Simulador de Investimentos atrelados ao CDI
 
 ![Python](https://img.shields.io/badge/Python-3.13-blue)
-![Versão](https://img.shields.io/badge/Versão-2.4-orange)
-![status](https://img.shields.io/badge/status-educacional-lightgrey)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Versão](https://img.shields.io/badge/Versão-2.5-orange)
 
 Simulador de investimentos (CDB, LCI, LCA) atrelados ao CDI, com cálculo de IR regressivo e comparação de rendimento, projeto de estudo em Python, numpy e matplotlib.
 
@@ -14,15 +14,12 @@ Simulação de um CDB (100% do CDI) com capital inicial de R$ 15.000, aportes me
 
 📓 Veja a análise completa, com todos os cenários comparados, em [`notebooks/analises.ipynb`](notebooks/analises.ipynb).
 
-📓 Veja a análise completa, com todos os cenários comparados, em [`notebooks/analises.ipynb`](notebooks/analises.ipynb).
-
 ## 📌 Descrição
 Este projeto tem como objetivo praticar lógica de programação em Python, modularização de código e visualização de dados com matplotlib, utilizando como contexto uma simulação de investimentos atrelados ao CDI.
 
 O foco do projeto é educacional, não sendo uma ferramenta de previsão ou recomendação de investimentos financeiros.
 
 ## 🚀 Funcionalidades
-- Cálculo do montante bruto e líquido de LCI, LCA e CDB, pós-fixados (% do CDI) ou prefixados (taxa travada)
 - Cálculo do montante bruto e líquido de LCI, LCA e CDB, pós-fixados (% do CDI) ou prefixados (taxa travada)
 - Comparação com o CDI
 - Simulação do valor não investido (dinheiro parado)
