@@ -21,7 +21,8 @@ def posfixado(periodo: int, taxa_indexador, percentual_indexador: float, capital
             Número de meses da simulação.
 
         taxa_indexador (float or np.ndarray):
-            Taxa anual do indexador em porcentagem (%).
+            Taxa anual do indexador em formato decimal (não mais em
+            porcentagem).
 
             Pode ser:
                 - um valor único, representando uma taxa constante;
@@ -29,16 +30,16 @@ def posfixado(periodo: int, taxa_indexador, percentual_indexador: float, capital
                   variável ao longo do tempo.
 
             Exemplo:
-                14.5 representa uma taxa anual de 14,5%.
+                0.145 representa uma taxa anual de 14,5%.
 
         percentual_indexador (float):
             Percentual do indexador contratado pelo investimento,
-            expresso em porcentagem (%).
+            expresso em formato decimal (não mais em porcentagem).
 
             Exemplos:
-                100 -> 100% do indexador
-                110 -> 110% do indexador
-                90  -> 90% do indexador
+                1.0  -> 100% do indexador
+                1.10 -> 110% do indexador
+                0.90 -> 90% do indexador
 
         capital (float, optional):
             Capital inicial investido no início da simulação.
@@ -83,8 +84,9 @@ def posfixado(periodo: int, taxa_indexador, percentual_indexador: float, capital
                 iniciando em zero.
 
     Notes:
-        - As taxas de entrada são informadas em porcentagem (%).
-        - As taxas são convertidas internamente para formato decimal.
+        - As taxas de entrada (taxa_indexador e percentual_indexador)
+          devem ser informadas em formato decimal, e não mais em
+          porcentagem.
         - A taxa anual do indexador é convertida para uma taxa mensal
           equivalente utilizando juros compostos.
         - O rendimento mensal do título corresponde à taxa mensal do
@@ -97,13 +99,10 @@ def posfixado(periodo: int, taxa_indexador, percentual_indexador: float, capital
 
     t = np.arange(periodo + 1)
 
-    taxa_convertida = taxa_indexador / 100
-    taxa = np.full(periodo + 1, taxa_convertida)
+    taxa = np.full(periodo + 1, taxa_indexador)
     taxa_meses = (1 + taxa) ** (1 / 12) - 1
 
-    percentual = percentual_indexador / 100
-
-    rendimento_meses = percentual * taxa_meses
+    rendimento_meses = percentual_indexador * taxa_meses
 
     Mtitulo = np.zeros(periodo + 1)
     Mtaxa = np.zeros(periodo + 1)
@@ -148,11 +147,12 @@ def prefixado(periodo: int, taxa_anual: float, capital: float = 0, aportes: floa
             Número de meses da simulação.
 
         taxa_anual (float):
-            Taxa fixa anual contratada, expressa em porcentagem (%).
+            Taxa fixa anual contratada, expressa em formato decimal
+            (não mais em porcentagem).
 
             Exemplos:
-                12 -> 12% ao ano.
-                10.5 -> 10,5% ao ano.
+                0.12  -> 12% ao ano.
+                0.105 -> 10,5% ao ano.
 
         capital (float, optional):
             Capital inicial investido no início da simulação.
@@ -196,8 +196,8 @@ def prefixado(periodo: int, taxa_anual: float, capital: float = 0, aportes: floa
                 iniciando em zero.
 
     Notes:
-        - A taxa anual é informada em porcentagem (%).
-        - Internamente, a taxa é convertida para formato decimal.
+        - A taxa anual (taxa_anual) deve ser informada em formato
+          decimal, e não mais em porcentagem.
         - A taxa anual é convertida para uma taxa mensal equivalente
           utilizando juros compostos.
         - A taxa mensal permanece constante durante toda a simulação.
@@ -206,8 +206,7 @@ def prefixado(periodo: int, taxa_anual: float, capital: float = 0, aportes: floa
           sobre o rendimento e não sobre o capital investido.
     """
 
-    taxa = taxa_anual / 100
-    taxa_meses = (1 + taxa) ** (1 / 12) - 1
+    taxa_meses = (1 + taxa_anual) ** (1 / 12) - 1
 
     t = np.arange(0, periodo + 1)
 

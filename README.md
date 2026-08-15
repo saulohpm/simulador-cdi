@@ -2,7 +2,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3.13-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
-![Versão](https://img.shields.io/badge/Versão-2.5-orange)
+![Versão](https://img.shields.io/badge/Versão-2.6-orange)
 
 Simulador de investimentos (CDB, LCI, LCA) atrelados ao CDI, com cálculo de IR regressivo e comparação de rendimento, projeto de estudo em Python, numpy e matplotlib.
 
@@ -33,23 +33,26 @@ O foco do projeto é educacional, não sendo uma ferramenta de previsão ou reco
 - Visualizar dados financeiros com `matplotlib`
 - Simular o desconto automático de Imposto de Renda regressivo
 
-Os detalhes matemáticos de cada cálculo (conversão de taxa, IR regressivo, montante com aportes, modelagem da taxa variável) estão documentados em [`docs/conceitos.md`](docs/conceitos.md) ou use [`docs/conceitos.pdf`](docs/conceitos.pdf).
-
 ## 📁 Estrutura do Projeto
 ```bash
 simulador-cdi/
+│
 │── main.py
 │── README.md
 │── requirements.txt
+│
 │── assets/
 │   └── exemplo_simulacao.png
+│
 │── docs/
 │   ├── conceitos.md
 │   └── conceitos.pdf
+│
 │── src/
 │   ├── calcular.py
 │   ├── graficos.py
 │   └── modelagem.py
+│
 └── notebooks/
     └── analises.ipynb
 ```
@@ -73,3 +76,7 @@ python main.py
 ```bash
 jupyter notebook notebooks/analises.ipynb
 ```
+
+## 📜 Referencias
+
+Os detalhes matemáticos de cada cálculo (conversão de taxa, IR regressivo, montante com aportes, modelagem da taxa variável), e também devidas referencias, estão documentados em [`docs/conceitos.md`](docs/conceitos.md), ou como alternativa [`docs/conceitos.pdf`](docs/conceitos.pdf).
