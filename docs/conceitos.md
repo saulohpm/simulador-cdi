@@ -107,9 +107,11 @@ $$
 
 Para simular um cenário de mercado onde a taxa de juros não permanece constante ao longo do tempo, foi criada uma função de variação da taxa anual baseada em uma função senoidal.
 
+> É importante ressaltar que a série do CDI não é periódica de verdade, principalmente uma função seno. Ela responde a decisões de política monetária (COPOM), então vai possuir patamares e degraus, não uma oscilação suave.
+
 ---
 
-A taxa variável é definida por:
+Vamos definir a taxa variável por:
 
 $$
 i(t)=\alpha \cdot \sin\left(\frac{t}{8}+\phi\right)+\beta
@@ -152,7 +154,11 @@ $$
 Substituindo $t=0$ na função:
 
 $$
-i_{atual}=\alpha\sin(\phi)+\beta
+i_{atual} = \alpha\sin(\phi) + \beta
+\Rightarrow
+i_{atual} - \beta = \alpha\sin(\phi)
+\Rightarrow
+\left(\frac{i_{atual}-\beta}{\alpha}\right) = \sin(\phi)
 $$
 
 Assim, uma das soluções possíveis é:
@@ -165,7 +171,7 @@ $$
 
 Entretanto, existem duas fases possíveis para o mesmo valor de seno. A escolha entre elas permite determinar a direção inicial da curva.
 
-Para um **mercado em alta**, é utilizada a fase correspondente a uma derivada inicial positiva, fazendo com que a taxa comece a subir.
+Para um **mercado em alta**, é utilizada a fase correspondente a uma derivada inicial positiva, isto é $\frac{di(t)}{dt} > 0$, fazendo com que a taxa comece a subir.
 
 Para um **mercado em baixa**, é utilizada a segunda solução:
 
@@ -180,7 +186,7 @@ fazendo com que a derivada inicial seja negativa e, portanto, a taxa comece a ca
 A implementação:
 
 ```python
-def taxa_de_juros_variavel(taxa_atual, t, taxa_max = 15, taxa_min = 2, mercado = "alta"):
+def taxa_de_juros_variavel(taxa_atual, t, taxa_max = 0.15, taxa_min = 0.02, mercado = "alta"):
     ...
 ```
 
@@ -198,7 +204,7 @@ enquanto o parâmetro `mercado` determina se a função inicia em uma trajetóri
 
 O gráfico compara:
 
-- Montante bruto do título (`Mtitulo`) — linha tracejada laranja (apenas CDB)  
+- Montante bruto do título (`Mtitulo`) — linha tracejada laranja (sem desconto do imposto)  
 - Montante líquido do título (`Mliq`) — linha sólida laranja  
 - CDI (`MCDI`) — linha tracejada cinza  
 - Caixa (`caixa`) — linha tracejada vermelha  
