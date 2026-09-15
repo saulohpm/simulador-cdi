@@ -15,7 +15,7 @@ Simulação de um CDB (100% do CDI) com capital inicial de R$ 15.000, aportes me
 📓 Veja a análise completa, com todos os cenários comparados, em [`notebooks/analises.ipynb`](notebooks/analises.ipynb).
 
 ## 📌 Descrição
-Este projeto tem como objetivo praticar lógica de programação em Python, modularização de código e visualização de dados com matplotlib, utilizando como contexto uma simulação de investimentos atrelados ao CDI.
+Este projeto tem como objetivo praticar lógica de programação em Python, modularização de código, visualização de dados com matplotlib e manipulação da biblioteca numpy, utilizando como contexto uma simulação de investimentos atrelados ao CDI.
 
 O foco do projeto é educacional, não sendo uma ferramenta de previsão ou recomendação de investimentos financeiros.
 
@@ -32,6 +32,7 @@ O foco do projeto é educacional, não sendo uma ferramenta de previsão ou reco
 - Exercitar a modularização do código em funções e módulos
 - Visualizar dados financeiros com `matplotlib`
 - Simular o desconto automático de Imposto de Renda regressivo
+- Modelagem matemática simples para previsão da taxa SELIC
 
 ## 📁 Estrutura do Projeto
 ```bash
