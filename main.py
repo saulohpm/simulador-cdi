@@ -7,10 +7,10 @@ import numpy as np
 def main():
 
     periodo = 12 * 5 # Meses
-    capital = 15000 # Reais
+    capital = 5000 # Reais
     aportes = 500 # Reais
-    CDI_atual = 0.14 # %a.a
-    CDB = 1.0
+    CDI_atual = 0.12 # % a.a
+    CDB = 1.05
 
     t = np.arange(periodo + 1) # Domínio Temporal
 

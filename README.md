@@ -8,7 +8,7 @@ Simulador de investimentos (CDB, LCI, LCA) atrelados ao CDI, com cálculo de IR 
 
 ## 📊 Exemplo de simulação
 
-Simulação de um CDB (100% do CDI) com capital inicial de R$ 15.000, aportes mensais de R$ 500 e CDI de 14% a.a. ao longo de 5 anos, utilizando CDI variável modelado por um senoide:
+Simulação de um CDB (105% do CDI) com capital inicial de R$ 5.000, aportes mensais de R$ 500 e CDI de 12% a.a. ao longo de 5 anos, utilizando CDI variável modelado por um senoide:
 
 ![Exemplo de gráfico gerado pelo simulador](assets/exemplo_simulacao.png)
 
@@ -32,7 +32,7 @@ O foco do projeto é educacional, não sendo uma ferramenta de previsão ou reco
 - Exercitar a modularização do código em funções e módulos
 - Visualizar dados financeiros com `matplotlib`
 - Simular o desconto automático de Imposto de Renda regressivo
-- Modelagem matemática simples para previsão da taxa SELIC
+- Modelagem matemática simples para previsão do CDI.
 
 ## 📁 Estrutura do Projeto
 ```bash
