@@ -1,6 +1,6 @@
-from src.calcular import posfixado, prefixado
+from src.calcular import posfixado
 from src.graficos import plotar
-from src.modelagem import taxa_de_juros_variavel
+from src import modelagem
 import numpy as np
 
 
@@ -15,7 +15,7 @@ def main():
     t = np.arange(periodo + 1) # Domínio Temporal
 
     # CDB 100% CDI
-    CDI = taxa_de_juros_variavel(CDI_atual, t)
+    CDI = modelagem.senoide(CDI_atual, t)
     MCDB, MCDI, caixa, Mliq, t = posfixado(periodo, CDI, CDB, capital, aportes)
     plotar(MCDB, MCDI, caixa, Mliq, t, "sim", "CDB")
 

@@ -1,6 +1,6 @@
 import numpy as np
 
-def taxa_de_juros_variavel(taxa_atual: float, t: np.ndarray, taxa_max: float = 0.15, taxa_min: float = 0.02, mercado: str = "alta"):
+def senoide(taxa_atual: float, t: np.ndarray, taxa_max: float = 0.15, taxa_min: float = 0.02, mercado: str = "alta"):
     """
     Gera uma taxa anual de juros variável ao longo do tempo, modelada
     por uma função senoidal entre uma taxa mínima e uma taxa máxima.
@@ -58,3 +58,6 @@ def taxa_de_juros_variavel(taxa_atual: float, t: np.ndarray, taxa_max: float = 0
     taxa_variavel = alpha * np.sin(t / 8 + phi) + beta
 
     return taxa_variavel
+
+def floor_senoide(taxa_atual: float, t: np.ndarray, taxa_max: float = 0.15, taxa_min: float = 0.02, mercado: str = "alta"):
+    return 0.0025 * np.floor(senoide(taxa_atual, t, taxa_max, taxa_min, mercado) / 0.0025)
