@@ -15,7 +15,7 @@ def main():
     t = np.arange(periodo + 1) # Domínio Temporal
 
     # CDB 100% CDI
-    CDI = modelagem.senoide(CDI_atual, t)
+    CDI = modelagem.floor(t, CDI_atual)
     MCDB, MCDI, caixa, Mliq, t = posfixado(periodo, CDI, CDB, capital, aportes)
     plotar(MCDB, MCDI, caixa, Mliq, t, "sim", "CDB")
 

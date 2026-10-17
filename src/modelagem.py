@@ -1,6 +1,6 @@
 import numpy as np
 
-def senoide(taxa_atual: float, t: np.ndarray, taxa_max: float = 0.15, taxa_min: float = 0.02, mercado: str = "alta"):
+def senoide(t: np.ndarray, taxa_atual: float, taxa_max: float = 0.15, taxa_min: float = 0.02, mercado: str = "alta"):
     """
     Gera uma taxa anual de juros variável ao longo do tempo, modelada
     por uma função senoidal entre uma taxa mínima e uma taxa máxima.
@@ -10,13 +10,13 @@ def senoide(taxa_atual: float, t: np.ndarray, taxa_max: float = 0.15, taxa_min: 
     de alta ou de baixa.
 
     Args:
+        t (np.ndarray):
+        Vetor de tempo, expresso em meses, para os quais as taxas
+        serão calculadas.
+
         taxa_atual (float):
             Taxa anual de juros atual, expressa em formato decimal
             (não mais em porcentagem). Exemplo: 0.145 representa 14,5%.
-
-        t (np.ndarray):
-            Vetor de tempo, expresso em meses, para os quais as taxas
-            serão calculadas.
 
         taxa_max (float, optional):
             Taxa anual máxima permitida, em formato decimal.
@@ -55,9 +55,14 @@ def senoide(taxa_atual: float, t: np.ndarray, taxa_max: float = 0.15, taxa_min: 
     elif mercado.lower() != "alta":
         raise ValueError("ERRO: mercado deve ser 'alta' ou 'baixa'")
 
-    taxa_variavel = alpha * np.sin(t / 8 + phi) + beta
+    taxa_variavel = alpha * np.sin(t / 9 + phi) + beta
 
     return taxa_variavel
 
-def floor_senoide(taxa_atual: float, t: np.ndarray, taxa_max: float = 0.15, taxa_min: float = 0.02, mercado: str = "alta"):
-    return 0.0025 * np.floor(senoide(taxa_atual, t, taxa_max, taxa_min, mercado) / 0.0025)
+def floor(t: np.ndarray, taxa_atual: float, taxa_max: float = 0.15, taxa_min: float = 0.02, mercado: str = "alta"):
+
+    tau = 1.5 * np.floor(t / 1.5)
+    i = senoide(tau, taxa_atual, taxa_max, taxa_min, mercado)
+
+    taxa_variavel = np.floor(400 * i) / 400
+    return taxa_variavel
