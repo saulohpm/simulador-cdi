@@ -254,7 +254,9 @@ Os parâmetros são:
 
 ---
 
-O COPOM faz 8 reuniões por ano, então $12/8 = 1{,}5$, logo foi escolhido 1.5 meses de intervalo. O  passo do COPOM é $0{,}25$ pp, que em decimal é $0{,}0025 = 1/400$. Multiplicar por $400$ faz cada degrau valer $1$, e o floor passa a contar degraus inteiros. Então, a função floor arredonda para o degrau de baixo, deixando a função com a estrutura mais próxima do CDI, e por isso $S(x) \le i(x)$.
+O COPOM faz 8 reuniões por ano, então $12/8 = 1{,}5$, logo foi escolhido 1.5 meses de intervalo. O  passo do COPOM é $0{,}25$ pp, que em decimal é $0{,}0025 = 1/400$. Multiplicar por $400$ faz cada degrau valer $1$, e o floor passa a contar degraus inteiros.
+
+Então, a função floor arredonda para o degrau de baixo, deixando a taxa com a estrutura em degraus do CDI. Por isso $S(t) \le i(\tau(t))$. Em relação a $i(t)$ isso só vale quando a senoide está subindo, porque na descida o atraso até a próxima reunião pode deixar $S(t)$ acima da senoide.
 
 ---
 
